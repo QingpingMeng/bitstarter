@@ -5,7 +5,12 @@ app.set('port', (process.env.PORT || 5000))
 app.use(express.static(__dirname + '/public'))
 
 app.get('/', function(request, response) {
-  response.send('Hello World!')
+	var fs=require('fs');
+	fs.readFile('./index.html',function(err,data){
+		if(err) throw err;
+		var buf=new Buffer(data);
+		response.send(buf.toString('utf-8'));
+	})
 })
 
 app.listen(app.get('port'), function() {
